@@ -25,9 +25,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useUserInterests, useProfile } from "@/hooks/useInterests";
 
 // Configuration variable for the Flockler iframe embed
-const FLOCKLER_IFRAME_EMBED = `<iframe src="https://plugins.flockler.com/embed/iframe/1b65cc6173e67ad4644a83c22ca02c13" width="100%" style="border: none; min-height: 900px;" allowfullscreen></iframe>`;
+const FLOCKLER_IFRAME_EMBED = `<iframe src="https://plugins.flockler.com/embed/iframe/19bb63b1c16082eb448330826057fdfe/19bb652af8703c6208ccb0ff98708017" width="100%" style="border: none; min-height: 900px;" allowfullscreen></iframe>`;
 
-const FLOCKLER_FEED_URL = "https://plugins.flockler.com/embed/iframe/1b65cc6173e67ad4644a83c22ca02c13";
+const FLOCKLER_FEED_URL = "https://plugins.flockler.com/embed/iframe/19bb63b1c16082eb448330826057fdfe/19bb652af8703c6208ccb0ff98708017";
 
 const Feed: React.FC = () => {
   const navigate = useNavigate();
