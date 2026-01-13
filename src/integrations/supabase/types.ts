@@ -40,18 +40,21 @@ export type Database = {
       }
       profiles: {
         Row: {
+          avatar_url: string | null
           created_at: string
           display_name: string | null
           id: string
           onboarding_completed: boolean
         }
         Insert: {
+          avatar_url?: string | null
           created_at?: string
           display_name?: string | null
           id: string
           onboarding_completed?: boolean
         }
         Update: {
+          avatar_url?: string | null
           created_at?: string
           display_name?: string | null
           id?: string

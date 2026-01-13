@@ -101,7 +101,7 @@ const Auth: React.FC = () => {
     } else {
       toast({
         title: "Account created!",
-        description: "Welcome to Feedlyzer.",
+        description: "Welcome to Methosapp.",
       });
     }
   };
@@ -128,7 +128,7 @@ const Auth: React.FC = () => {
         <div>
           <h1 className="text-4xl font-display font-bold mb-4">
             Welcome to{" "}
-            <span className="gradient-text">Feedlyzer</span>
+            <span className="gradient-text">Methosapp</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-md">
             Your personalized content feed from YouTube, TikTok, News, and more
@@ -136,7 +136,7 @@ const Auth: React.FC = () => {
           </p>
         </div>
         <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Feedlyzer
+          © {new Date().getFullYear()} Methosapp
         </p>
       </div>
 
