@@ -2,13 +2,12 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
-  RefreshCw,
   Settings,
   LogOut,
-  Inbox,
   Sparkles,
   Edit3,
   User,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +23,11 @@ import ThemeToggle from "@/components/ThemeToggle";
 import InterestPills from "@/components/InterestPills";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserInterests, useProfile } from "@/hooks/useInterests";
+
+// Configuration variable for the Flockler iframe embed
+const FLOCKLER_IFRAME_EMBED = `<iframe src="https://plugins.flockler.com/embed/iframe/1b65cc6173e67ad4644a83c22ca02c13" width="100%" style="border: none; min-height: 900px;" allowfullscreen></iframe>`;
+
+const FLOCKLER_FEED_URL = "https://plugins.flockler.com/embed/iframe/1b65cc6173e67ad4644a83c22ca02c13";
 
 const Feed: React.FC = () => {
   const navigate = useNavigate();
@@ -150,34 +154,36 @@ const Feed: React.FC = () => {
         </motion.div>
       )}
 
-      {/* Main Content - Empty State */}
-      <main className="container mx-auto px-4 py-16">
+      {/* Video Feed Section */}
+      <main className="container mx-auto px-4 py-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="max-w-md mx-auto text-center"
+          className="max-w-[1200px] mx-auto"
         >
-          <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-muted flex items-center justify-center">
-            <Inbox className="h-10 w-10 text-muted-foreground" />
-          </div>
-
-          <h2 className="text-2xl font-display font-semibold mb-3">
-            Your feed will appear here
+          <h2 className="text-2xl font-display font-semibold mb-6">
+            Video Feed
           </h2>
-          <p className="text-muted-foreground mb-8">
-            Once content sources are connected, your personalized feed will show
-            up here based on your selected interests.
-          </p>
 
-          <Button variant="outline" disabled className="gap-2">
-            <RefreshCw className="h-4 w-4" />
-            Refresh
-          </Button>
+          {/* Embed Container */}
+          <div
+            className="w-full [&_iframe]:w-full [&_iframe]:min-h-[700px] sm:[&_iframe]:min-h-[900px] [&_iframe]:border-0"
+            dangerouslySetInnerHTML={{ __html: FLOCKLER_IFRAME_EMBED }}
+          />
 
-          <p className="text-xs text-muted-foreground mt-4">
-            Content integrations coming soon
-          </p>
+          {/* Open in new tab link */}
+          <div className="mt-4 text-center">
+            <a
+              href={FLOCKLER_FEED_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <ExternalLink className="h-4 w-4" />
+              Open in new tab
+            </a>
+          </div>
         </motion.div>
       </main>
     </div>
