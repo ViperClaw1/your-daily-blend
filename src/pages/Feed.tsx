@@ -8,6 +8,7 @@ import {
   Inbox,
   Sparkles,
   Edit3,
+  User,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,17 +18,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Logo from "@/components/Logo";
 import ThemeToggle from "@/components/ThemeToggle";
 import InterestPills from "@/components/InterestPills";
 import { useAuth } from "@/contexts/AuthContext";
-import { useUserInterests } from "@/hooks/useInterests";
+import { useUserInterests, useProfile } from "@/hooks/useInterests";
 
 const Feed: React.FC = () => {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const { data: userInterests, isLoading } = useUserInterests();
+  const { data: profile } = useProfile();
 
   const interests = userInterests?.map((ui) => ui.interests) || [];
   const hasInterests = interests.length > 0;
@@ -37,8 +39,9 @@ const Feed: React.FC = () => {
     navigate("/", { replace: true });
   };
 
-  const userInitials =
-    user?.email?.slice(0, 2).toUpperCase() || "U";
+  const userInitials = profile?.display_name
+    ? profile.display_name.slice(0, 2).toUpperCase()
+    : user?.email?.slice(0, 2).toUpperCase() || "U";
 
   return (
     <div className="min-h-screen bg-background">
@@ -59,6 +62,9 @@ const Feed: React.FC = () => {
                   className="relative h-9 w-9 rounded-full"
                 >
                   <Avatar className="h-9 w-9">
+                    {profile?.avatar_url ? (
+                      <AvatarImage src={profile.avatar_url} alt="Profile" />
+                    ) : null}
                     <AvatarFallback className="bg-primary text-primary-foreground text-sm">
                       {userInitials}
                     </AvatarFallback>
@@ -67,9 +73,20 @@ const Feed: React.FC = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
                 <div className="px-2 py-1.5">
-                  <p className="text-sm font-medium">{user?.email}</p>
+                  <p className="text-sm font-medium">
+                    {profile?.display_name || user?.email}
+                  </p>
+                  {profile?.display_name && (
+                    <p className="text-xs text-muted-foreground">{user?.email}</p>
+                  )}
                 </div>
                 <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/profile" className="cursor-pointer">
+                    <User className="h-4 w-4 mr-2" />
+                    Profile
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/settings" className="cursor-pointer">
                     <Settings className="h-4 w-4 mr-2" />

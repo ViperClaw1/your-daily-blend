@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Save, LogOut, Loader2 } from "lucide-react";
+import { ArrowLeft, Save, LogOut, Loader2, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Logo from "@/components/Logo";
 import ThemeToggle from "@/components/ThemeToggle";
 import InterestSelector from "@/components/InterestSelector";
@@ -14,6 +13,7 @@ import {
   useInterests,
   useUserInterests,
   useSaveUserInterests,
+  useProfile,
 } from "@/hooks/useInterests";
 
 const Settings: React.FC = () => {
@@ -22,6 +22,7 @@ const Settings: React.FC = () => {
   const { data: interests, isLoading: interestsLoading } = useInterests();
   const { data: userInterests, isLoading: userInterestsLoading } =
     useUserInterests();
+  const { data: profile } = useProfile();
   const saveInterests = useSaveUserInterests();
 
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -56,6 +57,10 @@ const Settings: React.FC = () => {
     navigate("/", { replace: true });
   };
 
+  const userInitials = profile?.display_name
+    ? profile.display_name.slice(0, 2).toUpperCase()
+    : user?.email?.slice(0, 2).toUpperCase() || "U";
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -82,6 +87,32 @@ const Settings: React.FC = () => {
           transition={{ duration: 0.4 }}
           className="space-y-8"
         >
+          {/* Profile Card */}
+          <section className="bg-card rounded-2xl border border-border p-6 shadow-soft">
+            <Link
+              to="/profile"
+              className="flex items-center gap-4 hover:bg-muted/50 -m-2 p-2 rounded-xl transition-colors"
+            >
+              <Avatar className="h-14 w-14">
+                {profile?.avatar_url ? (
+                  <AvatarImage src={profile.avatar_url} alt="Profile" />
+                ) : null}
+                <AvatarFallback className="bg-primary text-primary-foreground text-lg">
+                  {userInitials}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold truncate">
+                  {profile?.display_name || "Set up your profile"}
+                </p>
+                <p className="text-sm text-muted-foreground truncate">
+                  {user?.email}
+                </p>
+              </div>
+              <User className="h-5 w-5 text-muted-foreground" />
+            </Link>
+          </section>
+
           {/* Interests Section */}
           <section className="bg-card rounded-2xl border border-border p-6 shadow-soft">
             <div className="flex items-center justify-between mb-6">
@@ -123,22 +154,6 @@ const Settings: React.FC = () => {
             <h2 className="text-xl font-display font-semibold mb-6">Account</h2>
 
             <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={user?.email || ""}
-                  disabled
-                  className="bg-muted/50"
-                />
-                <p className="text-xs text-muted-foreground">
-                  Your email cannot be changed
-                </p>
-              </div>
-
-              <Separator className="my-6" />
-
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-medium">Sign out</p>

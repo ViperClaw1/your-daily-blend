@@ -1,5 +1,5 @@
 import React from "react";
-import { Rss } from "lucide-react";
+import { Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface LogoProps {
@@ -22,12 +22,12 @@ const Logo: React.FC<LogoProps> = ({
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <div className="gradient-bg p-1.5 rounded-lg">
-        <Rss className={cn(sizes[size].icon, "text-primary-foreground")} />
+        <Layers className={cn(sizes[size].icon, "text-primary-foreground")} />
       </div>
       {showText && (
         <span className={cn("font-display font-bold", sizes[size].text)}>
-          <span className="gradient-text">Feed</span>
-          <span className="text-foreground">lyzer</span>
+          <span className="gradient-text">Methos</span>
+          <span className="text-foreground">app</span>
         </span>
       )}
     </div>

@@ -230,7 +230,7 @@ const Landing: React.FC = () => {
         <div className="container mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <Logo size="sm" />
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Feedlyzer. All rights reserved.
+            © {new Date().getFullYear()} Methosapp. All rights reserved.
           </p>
         </div>
       </footer>
